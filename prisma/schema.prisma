@@ -12,14 +12,14 @@ datasource db {
   provider = "postgresql"
 }
 
-model User{
-  id        String    @id @default(cuid())
-  email     String    @unique
-  password  String
-  name      String
-  role      Role      @default(USER)
-  teamid    String?
-  Team      Team?     @relation(fields:teamid, references:[id], onDelete: SetNull)
+model User {
+  id       String  @id @default(cuid())
+  email    String  @unique
+  password String
+  name     String
+  role     Role    @default(USER)
+  teamid   String?
+  team     Team?   @relation(fields: teamid, references: [id], onDelete: SetNull)
 
   //timestamps
   createdAt DateTime @default(now())
@@ -29,17 +29,15 @@ model User{
   @@index([email])
   @@index([role])
   @@index([teamid])
-
   //map
   @@map("users")
 }
 
-
-model Team{
-  id          String    @id @default(cuid())
-  name        String    @unique
+model Team {
+  id          String  @id @default(cuid())
+  name        String  @unique
   description String?
-  code        String    @unique
+  code        String  @unique
   members     User[]
 
   //timestamps
@@ -50,9 +48,9 @@ model Team{
   @@map("teams")
 }
 
-enum Role{
+enum Role {
   ADMIN
-  MAMAGER
+  MANAGER
   USER
-  GUST
+  GUEST
 }
