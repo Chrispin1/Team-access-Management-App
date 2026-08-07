@@ -64,10 +64,12 @@ async function main() {
         name: userData.name,
         password: await hashPassword("12345"),
         role: userData.role,
-        teamId: userData.team.id,
+        teamid: userData.team.id,
       },
     });
   }
+
+  console.log("Database Seeded Successfully!!");
 }
 
 main()
