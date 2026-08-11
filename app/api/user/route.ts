@@ -1,4 +1,4 @@
-import { currentUser } from "@/app/lib/auth";
+import { getCurrentUser } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/db";
 import { Role } from "@/app/types";
 import { Prisma } from "@/generated/prisma/client";
@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   try {
-    const user = await currentUser();
+    const user = await getCurrentUser();
 
     if (!user) {
       return NextResponse.json(

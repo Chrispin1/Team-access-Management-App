@@ -1,4 +1,4 @@
-import { checkUserPermission, currentUser } from "@/app/lib/auth";
+import { checkUserPermission, getCurrentUser } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/db";
 import { Role } from "@/app/types";
 import { Prisma } from "@/generated/prisma/client";
@@ -10,7 +10,7 @@ export async function PATCH(
 ) {
   try {
     const { userId } = await context.params;
-    const user = await currentUser();
+    const user = await getCurrentUser();
 
     if (!user || !checkUserPermission(user, Role.ADMIN)) {
       return NextResponse.json(
