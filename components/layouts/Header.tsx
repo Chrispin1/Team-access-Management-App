@@ -5,14 +5,15 @@ import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { User } from "@/app/types";
 
-// interface HeaderProps {
-//   user: User | null;
-// }
+interface HeaderProps {
+  user: User | null;
+}
 
-const Header = () => {
+const Header = ({ user }: HeaderProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const user = true;
+  const user1 = true;
 
   const navigation = [
     { name: "Home", href: "/", show: true },
@@ -73,7 +74,7 @@ const Header = () => {
           {/* user info */}
           <div className="hidden md:flex items-center gap-2">
             <div className="flex items-center gap-2">
-              {user ? (
+              {user1 ? (
                 <>
                   <div className="flex items-center gap-2">
                     {/* Avatar */}
