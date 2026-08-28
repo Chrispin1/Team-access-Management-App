@@ -31,6 +31,8 @@ class ApiClient {
         .catch(() => ({ error: "Network Error" }));
       throw new Error(error.error || "Request failed");
     }
+
+    return response.json();
   }
 
   //Auth Methods
@@ -78,3 +80,5 @@ class ApiClient {
     });
   }
 }
+
+export const apiClient = new ApiClient();

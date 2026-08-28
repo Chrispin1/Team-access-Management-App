@@ -13,7 +13,6 @@ interface HeaderProps {
 
 const Header = ({ user }: HeaderProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const user1 = true;
 
   const navigation = [
     { name: "Home", href: "/", show: true },
@@ -74,7 +73,7 @@ const Header = ({ user }: HeaderProps) => {
           {/* user info */}
           <div className="hidden md:flex items-center gap-2">
             <div className="flex items-center gap-2">
-              {user1 ? (
+              {user ? (
                 <>
                   <div className="flex items-center gap-2">
                     {/* Avatar */}
@@ -120,7 +119,7 @@ const Header = ({ user }: HeaderProps) => {
         <>
           {/* Backdrop overlay strictly below the header */}
           <div
-            className="fixed inset-x-0 bottom-0 top-[65px] bg-black/30 z-40 md:hidden"
+            className="fixed inset-x-0 bottom-0 top-16.25 bg-black/30 z-40 md:hidden"
             onClick={() => setIsMobileMenuOpen(false)}
             aria-hidden="true"
           />
