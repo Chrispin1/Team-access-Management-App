@@ -26,9 +26,20 @@ export interface Team {
   updatedAt: Date;
 }
 
+export interface RegisterState {
+  success?: boolean;
+  user?: User;
+  error?: string;
+}
+
 export interface AuthContextType {
   user: User | null;
   login: (formData: FormData) => void;
+  register: (formData: FormData) => void;
   logOut: () => void;
   hasPermission: (requiredRole: Role) => boolean;
+  isRegisterPending: boolean;
+  isLoginPending: boolean;
+  registerState: RegisterState;
+  loginState: RegisterState;
 }

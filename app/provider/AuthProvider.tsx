@@ -14,7 +14,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { AuthContextType, Role, User } from "../types";
+import { AuthContextType, RegisterState, Role, User } from "../types";
 import { apiClient } from "@/lib/apiClient";
 import { useRouter } from "next/navigation";
 
@@ -59,6 +59,46 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       user: undefined,
       error: undefined,
     } as LoginState,
+  );
+
+  //useActionState for register
+  const [registerState, registerAction, isRegisterPending] = useActionState(
+    async (
+      _prev: RegisterState,
+      formData: FormData,
+    ): Promise<RegisterState> => {
+      const name = formData.get("name");
+      const email = formData.get("email");
+      const password = formData.get("password");
+      const teamCode = formData.get("teamCode");
+
+      if (
+        typeof name != "string" ||
+        typeof email != "string" ||
+        typeof password !== "string"
+      ) {
+        return { error: "Missing required fields" };
+      }
+      try {
+        const data = await apiClient.register({
+          name,
+          email,
+          password,
+          ...(typeof teamCode === "string" && teamCode.trim()
+            ? { teamCode }
+            : {}),
+        });
+        if (!data || !data.user) return { error: "Registration failed" };
+        setUser(data.user);
+        router.push("/dashboard");
+        return { success: true, user: data.user };
+      } catch (error) {
+        return {
+          error: error instanceof Error ? error.message : "Registration failed",
+        };
+      }
+    },
+    { success: undefined, user: undefined, error: undefined } as RegisterState,
   );
 
   const logOut = async () => {
@@ -109,6 +149,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       hasPermission,
       user,
       isLoadingUser,
+      registerState,
+      register: registerAction,
+      isRegisterPending,
     }),
     [
       user,
