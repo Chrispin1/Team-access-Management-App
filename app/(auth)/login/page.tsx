@@ -68,57 +68,67 @@ export default function LoginPage() {
           }}>
           <form.Field
             name="email"
-            validators={{ onChange: registerSchema.shape.name }}>
-            {(field) => (
-              <div className="flex flex-col gap-1 font-jost ">
-                <Label htmlFor="email" className="text-primary">
-                  Email
-                </Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  autoComplete="email"
-                  className="py-5"
-                />
-                {field.state.meta.errors.length > 0 && (
-                  <p className="text-sm text-destructive">
-                    {field.state.meta.errors[0]?.message}
-                  </p>
-                )}
-              </div>
-            )}
+            validators={{ onChange: registerSchema.shape.email }}>
+            {(field) => {
+              const hasError =
+                field.state.meta.isTouched &&
+                field.state.meta.errors.length > 0;
+              return (
+                <div className="flex flex-col gap-1 font-jost ">
+                  <Label htmlFor="email" className="text-primary">
+                    Email
+                  </Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="johndoe@gmail.com"
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    autoComplete="email"
+                    className={`py-5 ${hasError ? "border border-destructive" : ""}`}
+                  />
+                  {field.state.meta.errors.length > 0 && (
+                    <p className="text-sm text-destructive">
+                      {field.state.meta.errors[0]?.message}
+                    </p>
+                  )}
+                </div>
+              );
+            }}
           </form.Field>
 
           <form.Field
             name="password"
             validators={{ onChange: registerSchema.shape.password }}>
-            {(field) => (
-              <div className="flex flex-col gap-1 font-jost">
-                <Label htmlFor="password" className="text-primary">
-                  Password
-                </Label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="·············"
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  className="py-5"
-                />
-                {field.state.meta.errors.length > 0 && (
-                  <p className="text-sm text-destructive">
-                    {field.state.meta.errors.map((err) => err?.message)}
-                  </p>
-                )}
-              </div>
-            )}
+            {(field) => {
+              const hasError =
+                field.state.meta.isTouched &&
+                field.state.meta.errors.length > 0;
+              return (
+                <div className="flex flex-col gap-1 font-jost">
+                  <Label htmlFor="password" className="text-primary">
+                    Password
+                  </Label>
+                  <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    placeholder="·············"
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    className={`py-5 ${hasError ? "border border-destructive" : ""}`}
+                  />
+                  {field.state.meta.errors.length > 0 && (
+                    <p className="text-sm text-destructive">
+                      {field.state.meta.errors.map((err) => err?.message)}
+                    </p>
+                  )}
+                </div>
+              );
+            }}
           </form.Field>
 
           <Button type="submit" className="font-jost mb-4" size="lg">
